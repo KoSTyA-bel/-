@@ -34,8 +34,8 @@ def pause():
     end = pygame.font.SysFont('Times new roman', 80)
     again = pygame.font.SysFont('Times new roman', 40)
 
-    punkts = [(310, 300, u'Continue', (11, 0, 77), (30,250,30), 0),
-          (350, 340, u'Exit', (11, 0, 77), (250,30,30), 1)]
+    punkts = [(WIN_WIDTH / 2 - 90, 300, u'Continue', (11, 0, 77), (30,250,30), 0),
+          (WIN_WIDTH / 2 - 50, 340, u'Exit', (11, 0, 77), (250,30,30), 1)]
     game = StartMenu(punkts)
     game.menu()
 
@@ -50,11 +50,11 @@ def endgame():
 
 def first(way, num):
     if num != 1:
-        punkts = [(350, 300, u'Next', (11, 0, 77), (30,250,30), 0),
-            (350, 340, u'Exit', (11, 0, 77), (250,30,30), 1)]
+        punkts = [(WIN_WIDTH / 2 - 50, 300, u'Next', (11, 0, 77), (30,250,30), 0),
+            (WIN_WIDTH / 2 - 50, 340, u'Exit', (11, 0, 77), (250,30,30), 1)]
     else:
-        punkts = [(350, 300, u'Play', (11, 0, 77), (30,250,30), 0),
-            (350, 340, u'Exit', (11, 0, 77), (250,30,30), 1)]
+        punkts = [(WIN_WIDTH / 2 - 50, 300, u'Play', (11, 0, 77), (30,250,30), 0),
+            (WIN_WIDTH / 2 - 50, 340, u'Exit', (11, 0, 77), (250,30,30), 1)]
 
     game = StartMenu(punkts)
     game.menu()
@@ -127,7 +127,7 @@ def first(way, num):
             hero.live = True
             hero.teleporting()
             
-        #print(timer)
+        print(timer)
         
 if __name__ == "__main__":
     first('levels/1.txt', 1)

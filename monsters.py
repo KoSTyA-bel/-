@@ -8,7 +8,7 @@ import os
 MONSTER_WIDTH = 32
 MONSTER_HEIGHT = 32
 MONSTER_COLOR = "#2110FF"
-AMIM_DELAY = 0.15
+AMIM_DELAY = 1
 ICON_DIR = os.path.dirname(__file__) #  Полный путь к каталогу с файлами
 
 
@@ -32,6 +32,7 @@ class Monster(sprite.Sprite):
         for anim in ANIMATION_MONSTERHORYSONTAL:
             boltAnim.append((anim, AMIM_DELAY))
         self.boltAnim = pyganim.PygAnimation(boltAnim)
+        self.boltAnim.convert_alpha()
         self.boltAnim.play()
          
     def update(self, platforms): # по принципу героя

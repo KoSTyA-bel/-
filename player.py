@@ -7,7 +7,7 @@ from blocks import *
 from monsters import *
 
 pygame.init()
-MOVE_SPEED = 3
+MOVE_SPEED = 3.2
 WIDTH = 22
 HEIGHT = 32
 COLOR =  "#888888"
@@ -61,6 +61,7 @@ class Player(sprite.Sprite):
         for anim in ANIMATION_RIGHT:
             boltAnim.append((anim, ANIMATION_DELAY))
         self.boltAnimRight = pyganim.PygAnimation(boltAnim)
+        self.boltAnimRight.convert_alpha()
         self.boltAnimRight.play()
 
         #Анимация движения влево
@@ -68,23 +69,29 @@ class Player(sprite.Sprite):
         for anim in ANIMATION_LEFT:
             boltAnim.append((anim, ANIMATION_DELAY))
         self.boltAnimLeft = pyganim.PygAnimation(boltAnim)
+        self.boltAnimLeft.convert_alpha()
         self.boltAnimLeft.play()
 
         #По-умолчанию, стоим
         self.boltAnimStay = pyganim.PygAnimation(ANIMATION_STAY)
+        self.boltAnimStay.convert_alpha()
         self.boltAnimStay.play()
         self.boltAnimStay.blit(self.image, (0, 0))
 
         self.boltAnimJumpLeft = pyganim.PygAnimation(ANIMATION_JUMP_LEFT)
+        self.boltAnimJumpLeft.convert_alpha()
         self.boltAnimJumpLeft.play()
 
         self.boltAnimJumpRight = pyganim.PygAnimation(ANIMATION_JUMP_RIGHT)
+        self.boltAnimJumpRight.convert_alpha()
         self.boltAnimJumpRight.play()
 
         self.boltAnimJump = pyganim.PygAnimation(ANIMATION_JUMP)
+        self.boltAnimJump.convert_alpha()
         self.boltAnimJump.play()
 
         self.boltAnimDie = pyganim.PygAnimation(ANIMATION_DIE)
+        self.boltAnimDie.convert_alpha()
         self.boltAnimDie.play()
         
         del(boltAnim)
@@ -173,7 +180,8 @@ class Player(sprite.Sprite):
 
                 elif yvel < 0 and not isinstance(platform, blocks.Half):                      # если движется вверх
                     self.rect.top = platform.rect.bottom # то не движется вверх
-                    self.yvel = 0                 # и энергия прыжка пропадает
+                    self.yvel = 0.2                 # и энергия прыжка пропадает
+                    #Если дать -1 можно получить интересную механику)))
                 
                 #I delete this
                 #if isinstance(platform, blocks.Movable):
