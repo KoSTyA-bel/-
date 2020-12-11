@@ -119,7 +119,7 @@ def first(way, num):
         screen.blit(font_lvl.render("Level {}".format(num), True, "#8bfff4"), (10,10))
         pygame.display.update()     # обновление и вывод всех изменений на экран
         
-        if hero.win:
+        if hero.win: 
             break
         
         if not hero.live:

@@ -30,11 +30,12 @@ class Half(Platform):
     def __init__(self, x, y):
         Platform.__init__(self, x, y)
         self.image = image.load("block/H.png").convert_alpha()
+        self.rect = Rect(x, y, PLATFORM_WIDTH, PLATFORM_HEIGHT / 2)
 
-class Coin(Platform):
-    def __init__(self, x, y):
-        Platform.__init__(self, x, y)
-        self.image = image.load("block/coin.png")
+# class Coin(Platform):
+    # def __init__(self, x, y):
+        # Platform.__init__(self, x, y)
+        # self.image = image.load("block/coin.png")
 
 # class Movable(Platform):
     # def __init__(self, x, y):

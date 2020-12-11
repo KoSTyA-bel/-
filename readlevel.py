@@ -83,10 +83,10 @@ class Level:
                     self.entities.add(m)
                     self.platforms.append(m)
                     
-                if col == "C":
-                    c = Coin(x,y)
-                    self.entities.add(c)
-                    self.platforms.append(c)
+                # if col == "C":
+                    # c = Coin(x,y)
+                    # self.entities.add(c)
+                    # self.platforms.append(c)
                     
                 # if col == " ":
                     # r = random.randint(0,2)

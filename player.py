@@ -161,10 +161,6 @@ class Player(sprite.Sprite):
                 
                 if isinstance(platform, blocks.BlockDie) or isinstance(platform, Monster): # если пересакаемый блок - blocks.BlockDie
                     self.die()# умираем
-                elif isinstance(platform, blocks.Coin):
-                    SOUND_COIN.play()
-                    platforms.remove(platform)
-                    entities.remove(platform)
                 elif isinstance(platform, blocks.End):
                     self.win = True
                 elif xvel > 0 and not isinstance(platform, blocks.Half):                      # если движется вправо
@@ -182,6 +178,10 @@ class Player(sprite.Sprite):
                     self.rect.top = platform.rect.bottom # то не движется вверх
                     self.yvel = 0.2                 # и энергия прыжка пропадает
                     #Если дать -1 можно получить интересную механику)))
+                # elif isinstance(platform, blocks.Coin):
+                    # SOUND_COIN.play()
+                    # platforms.remove(platform)
+                    # entities.remove(platform)
                 
                 #I delete this
                 #if isinstance(platform, blocks.Movable):
