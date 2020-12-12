@@ -4,10 +4,12 @@ from blocks import *
 from monsters import *
 import random
 
+ICON_DIR = os.path.dirname(__file__)
+
 class Level:
 
     def __init__(self, way):
-        self.levelFile = open(way, 'r')
+        self.levelFile = open("%s/{}".format(way) % ICON_DIR, 'r')
         self.playerX = 0
         self.playerY = 0
         self.level = []
