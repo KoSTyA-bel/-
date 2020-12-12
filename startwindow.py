@@ -3,8 +3,9 @@ import pygame
 from pygame import*
 from main import *
 
-SOUND_CHOISE = pygame.mixer.Sound('levels/select.wav')
-SOUND_ACCEPT = pygame.mixer.Sound('levels/accept.wav')
+ICON_DIR = os.path.dirname(__file__)
+SOUND_CHOISE = pygame.mixer.Sound("%s/levels/select.wav" % ICON_DIR)
+SOUND_ACCEPT = pygame.mixer.Sound("%s/levels/accept.wav" % ICON_DIR)
 window = pygame.display.set_mode(DISPLAY)
 screen = pygame.Surface((WIN_WIDTH, WIN_HEIGHT))
 
