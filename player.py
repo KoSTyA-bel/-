@@ -112,7 +112,7 @@ class Player(sprite.Sprite):
             self.xvel = -MOVE_SPEED # Лево = x - n
             #SOUND_STEP.play()
             self.image.fill(Color(COLOR))
-            if up or abs(self.yvel) > 1: # для прыжка влево есть отдельная анимация
+            if up or (abs(self.yvel) > 2 * GRAVITY and  not self.onGround): # для прыжка влево есть отдельная анимация
                 self.boltAnimJumpLeft.blit(self.image, (0, 0))
             else:
                 self.boltAnimLeft.blit(self.image, (0, 0))
@@ -121,7 +121,7 @@ class Player(sprite.Sprite):
             self.xvel = MOVE_SPEED # Право = x + n
             #SOUND_STEP.play()
             self.image.fill(Color(COLOR))
-            if up or abs(self.yvel) > 1:
+            if up or (abs(self.yvel) > 2 * GRAVITY and not self.onGround):
                 self.boltAnimJumpRight.blit(self.image, (0, 0))
             else:
                 self.boltAnimRight.blit(self.image, (0, 0))

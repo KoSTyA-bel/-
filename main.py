@@ -31,20 +31,13 @@ def camera_configure(camera, target_rect):
     return Rect(l, t, w, h)
 
 def pause():
-    end = pygame.font.SysFont('Times new roman', 80)
-    again = pygame.font.SysFont('Times new roman', 40)
-
     punkts = [(WIN_WIDTH / 2 - 90, 300, u'Continue', (11, 0, 77), (30,250,30), 0),
           (WIN_WIDTH / 2 - 50, 340, u'Exit', (11, 0, 77), (250,30,30), 1)]
     game = StartMenu(punkts)
     game.menu()
 
 def endgame():
-    end = pygame.font.SysFont('Times new roman', 80)
-    again = pygame.font.SysFont('Times new roman', 40)
-
-    punkts = [(320, 300, u'The end', (250,30,30), (250,30,30), 0),
-          (350, 340, u'Exit', (11, 0, 77), (250,30,30), 1)]
+    punkts = [(320, 300, u'The end', (250,30,30), (250,30,30), 0)]
     game = StartMenu(punkts)
     game.menu()
 
@@ -125,7 +118,6 @@ def first(way, num):
         
         if show_fps:
             screen.blit(font_lvl.render("{}".format(str(timer)[11:13]), True, "#8bfff4"), (WIN_WIDTH - 40, 0))
-            print(2)
         
         pygame.display.update()     # обновление и вывод всех изменений на экран
         
