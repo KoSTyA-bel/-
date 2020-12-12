@@ -7,9 +7,10 @@ import os
 PLATFORM_WIDTH = 32
 PLATFORM_HEIGHT = 32
 PLATFORM_COLOR = "#FF6262"
+ICON_DIR = os.path.dirname(__file__)
 
 class Platform(sprite.Sprite):
-    def __init__(self, x, y, way = "block/block.png"):
+    def __init__(self, x, y, way = "%s/block/block.png" % ICON_DIR):
         sprite.Sprite.__init__(self)
         self.image = Surface((PLATFORM_WIDTH, PLATFORM_HEIGHT))
         self.image.fill(Color(PLATFORM_COLOR))
@@ -19,18 +20,23 @@ class Platform(sprite.Sprite):
 class BlockDie(Platform):
     def __init__(self, x, y):
         Platform.__init__(self, x, y)
-        self.image = image.load("block/die.png").convert_alpha()
+        self.image = image.load("%s/block/die.png" % ICON_DIR).convert_alpha()
 
 class End(Platform):
     def __init__(self, x, y):
         Platform.__init__(self, x, y)
-        self.image = image.load("block/win.png").convert_alpha()
+        self.image = image.load("%s/block/win.png" % ICON_DIR).convert_alpha()
 
 class Half(Platform):
     def __init__(self, x, y):
         Platform.__init__(self, x, y)
-        self.image = image.load("block/H.png").convert_alpha()
+        self.image = image.load("%s/block/H.png" % ICON_DIR).convert_alpha()
         self.rect = Rect(x, y, PLATFORM_WIDTH, PLATFORM_HEIGHT / 2)
+
+class Magnit(Platform):
+    def __init__(self, x, y):
+        Platform.__init__(self, x, y)
+        self.image = image.load("%s/block/magnit.png" % ICON_DIR).convert_alpha()
 
 # class Coin(Platform):
     # def __init__(self, x, y):

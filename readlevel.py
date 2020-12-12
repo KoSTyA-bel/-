@@ -73,21 +73,27 @@ class Level:
                     self.entities.add(end)
                     self.platforms.append(end)
 
-                if col == "M":
-                    m = Movable(x,y)
-                    self.entities.add(m)
-                    self.platforms.append(m)
-
                 if col == "H":
                     m = Half(x,y)
                     self.entities.add(m)
                     self.platforms.append(m)
                     
+                if col == "M":
+                    m = Magnit(x,y)
+                    self.entities.add(m)
+                    self.platforms.append(m)
+                    
+                # if col == "M":
+                    # m = Movable(x,y)
+                    # self.entities.add(m)
+                    # self.platforms.append(m)
+                    
                 # if col == "C":
                     # c = Coin(x,y)
                     # self.entities.add(c)
                     # self.platforms.append(c)
-                    
+                
+                #слишком сильно кушает фпс
                 # if col == " ":
                     # r = random.randint(0,2)
                     # if r == 0:

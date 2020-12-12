@@ -80,6 +80,7 @@ def first(way, num):
     del(punkts)
     del(Lvl_1)
     del(game)
+    show_fps = False;
 
     while True: # Основной цикл программы
         #фПС
@@ -96,6 +97,8 @@ def first(way, num):
                     left = True
                 if event.key == K_RIGHT:
                     right = True
+                if event.key == K_f:
+                    show_fps = not show_fps
                 if event.key == K_ESCAPE:
                     pause()
 
@@ -113,10 +116,17 @@ def first(way, num):
         camera.update(hero) # центризируем камеру относительно персонажа
         hero.update(left, right, up, platforms, entities) # передвижение
         
-        for e in entities:
-            screen.blit(e.image, camera.apply(e))
+        #Рисуем платформы
+        for entity in entities:
+            screen.blit(entity.image, camera.apply(entity))
         
+        #Отображаем название уровня
         screen.blit(font_lvl.render("Level {}".format(num), True, "#8bfff4"), (10,10))
+        
+        if show_fps:
+            screen.blit(font_lvl.render("{}".format(str(timer)[11:13]), True, "#8bfff4"), (WIN_WIDTH - 40, 0))
+            print(2)
+        
         pygame.display.update()     # обновление и вывод всех изменений на экран
         
         if hero.win: 
@@ -126,12 +136,10 @@ def first(way, num):
             time.wait(300)
             hero.live = True
             hero.teleporting()
-            
-        print(timer)
         
 if __name__ == "__main__":
-    first('levels/1.txt', 1)
-    first('levels/2.txt', 2)
+    first('levels/2.txt', 1)
+    first('levels/1.txt', 2)
     endgame()
 
 # TODO:

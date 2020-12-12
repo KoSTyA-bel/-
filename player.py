@@ -14,30 +14,31 @@ COLOR =  "#888888"
 JUMP_POWER = 8
 GRAVITY = 0.35 # Сила, которая будет тянуть нас вниз
 ANIMATION_DELAY = 0.08 # скорость смены кадров
+ICON_DIR = os.path.dirname(__file__)
 
-ANIMATION_RIGHT = [('alien/0ralient.png'),
-            ('alien/1ralient.png'),
-            ('alien/2ralient.png'),
-            ('alien/1ralient.png'),
-            ('alien/0ralient.png'),
-            ('alien/3ralient.png'),
-            ('alien/4ralient.png'),]
-ANIMATION_LEFT = [('alien/0lalient.png'),
-            ('alien/1lalient.png'),
-            ('alien/2lalient.png'),
-            ('alien/1lalient.png'),
-            ('alien/0lalient.png'),
-            ('alien/3lalient.png'),
-            ('alien/4lalient.png'),]
-ANIMATION_JUMP_LEFT = [('alien/jlalien.png', ANIMATION_DELAY)]
-ANIMATION_JUMP_RIGHT = [('alien/jralien.png', ANIMATION_DELAY)]
-ANIMATION_JUMP = [('alien/jalien.png', ANIMATION_DELAY)]
-ANIMATION_STAY = [('alien/0alien.png', ANIMATION_DELAY)]
-ANIMATION_DIE = [('alien/dalien.png', ANIMATION_DELAY)]
-SOUND_JUMP = pygame.mixer.Sound('alien/jump.wav')
-SOUND_DIE = pygame.mixer.Sound('alien/die.wav')
-SOUND_STEP = pygame.mixer.Sound('alien/step.wav')
-SOUND_COIN = pygame.mixer.Sound('alien/coin.wav')
+ANIMATION_RIGHT = [("%s/alien/0ralient.png" % ICON_DIR),
+            ("%s/alien/1ralient.png" % ICON_DIR),
+            ("%s/alien/2ralient.png" % ICON_DIR),
+            ("%s/alien/1ralient.png" % ICON_DIR),
+            ("%s/alien/0ralient.png" % ICON_DIR),
+            ("%s/alien/3ralient.png" % ICON_DIR),
+            ("%s/alien/4ralient.png" % ICON_DIR)]
+ANIMATION_LEFT = [("%s/alien/0lalient.png" % ICON_DIR),
+            ("%s/alien/1lalient.png" % ICON_DIR),
+            ("%s/alien/2lalient.png" % ICON_DIR),
+            ("%s/alien/1lalient.png" % ICON_DIR),
+            ("%s/alien/0lalient.png" % ICON_DIR),
+            ("%s/alien/3lalient.png" % ICON_DIR),
+            ("%s/alien/4lalient.png" % ICON_DIR)]
+ANIMATION_JUMP_LEFT = [('%s/alien/jlalien.png' % ICON_DIR, ANIMATION_DELAY)]
+ANIMATION_JUMP_RIGHT = [('%s/alien/jralien.png' % ICON_DIR, ANIMATION_DELAY)]
+ANIMATION_JUMP = [('%s/alien/jalien.png' % ICON_DIR, ANIMATION_DELAY)]
+ANIMATION_STAY = [('%s/alien/0alien.png' % ICON_DIR, ANIMATION_DELAY)]
+ANIMATION_DIE = [('%s/alien/dalien.png' % ICON_DIR, ANIMATION_DELAY)]
+SOUND_JUMP = pygame.mixer.Sound("%s/alien/jump.wav" % ICON_DIR)
+SOUND_DIE = pygame.mixer.Sound("%s/alien/die.wav" % ICON_DIR)
+SOUND_STEP = pygame.mixer.Sound("%s/alien/step.wav" % ICON_DIR)
+SOUND_COIN = pygame.mixer.Sound("%s/alien/coin.wav" % ICON_DIR)
 
 class Player(sprite.Sprite):
     def __init__(self, x, y):
@@ -111,7 +112,7 @@ class Player(sprite.Sprite):
             self.xvel = -MOVE_SPEED # Лево = x - n
             #SOUND_STEP.play()
             self.image.fill(Color(COLOR))
-            if up: # для прыжка влево есть отдельная анимация
+            if up or abs(self.yvel) > 1: # для прыжка влево есть отдельная анимация
                 self.boltAnimJumpLeft.blit(self.image, (0, 0))
             else:
                 self.boltAnimLeft.blit(self.image, (0, 0))
@@ -120,7 +121,7 @@ class Player(sprite.Sprite):
             self.xvel = MOVE_SPEED # Право = x + n
             #SOUND_STEP.play()
             self.image.fill(Color(COLOR))
-            if up:
+            if up or abs(self.yvel) > 1:
                 self.boltAnimJumpRight.blit(self.image, (0, 0))
             else:
                 self.boltAnimRight.blit(self.image, (0, 0))
@@ -151,6 +152,7 @@ class Player(sprite.Sprite):
         return self.win
 
     def teleporting(self):
+        self.xvel, self.yvel = 0,0
         self.rect.x = self.startX
         self.rect.y = self.startY
 
@@ -163,6 +165,11 @@ class Player(sprite.Sprite):
                     self.die()# умираем
                 elif isinstance(platform, blocks.End):
                     self.win = True
+                    
+                elif isinstance(platform, blocks.Magnit):
+                    self.rect.top = platform.rect.bottom # то не движется вверх
+                    self.yvel -= GRAVITY +0.01 #Нужно для зависания в воздухе
+                    
                 elif xvel > 0 and not isinstance(platform, blocks.Half):                      # если движется вправо
                     self.rect.right = platform.rect.left # то не движется вправо
 
