@@ -1,6 +1,6 @@
 from pygame import *
 
-class Camera(object):
+class Camera:
     def __init__(self, camera_func, width, height):
         self.camera_func = camera_func
         self.state = Rect(0, 0, width, height)

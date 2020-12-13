@@ -33,15 +33,15 @@ def camera_configure(camera, target_rect):
 def pause():
     punkts = [(WIN_WIDTH / 2 - 90, 300, u'Continue', (11, 0, 77), (30,250,30), 0),
           (WIN_WIDTH / 2 - 50, 340, u'Exit', (11, 0, 77), (250,30,30), 1)]
-    game = StartMenu(punkts)
-    game.menu()
+    game = Menu(punkts)
+    game.showMenu()
 
 def endgame():
     punkts = [(320, 300, u'The end', (250,30,30), (250,30,30), 0)]
-    game = StartMenu(punkts)
-    game.menu()
+    game = Menu(punkts)
+    game.showMenu()
 
-def first(way, num):
+def playLvl(way, num, lvl_name):
     if num != 1:
         punkts = [(WIN_WIDTH / 2 - 50, 300, u'Next', (11, 0, 77), (30,250,30), 0),
             (WIN_WIDTH / 2 - 50, 340, u'Exit', (11, 0, 77), (250,30,30), 1)]
@@ -49,10 +49,10 @@ def first(way, num):
         punkts = [(WIN_WIDTH / 2 - 50, 300, u'Play', (11, 0, 77), (30,250,30), 0),
             (WIN_WIDTH / 2 - 50, 340, u'Exit', (11, 0, 77), (250,30,30), 1)]
 
-    game = StartMenu(punkts)
-    game.menu()
+    game = Menu(punkts)
+    game.showMenu()
     
-    Lvl_1 = Level(way)
+    Lvk = Level(way)
     timer = pygame.time.Clock()
     screen = pygame.display.set_mode(DISPLAY) # Создаем окошко
     bg = Surface((WIN_WIDTH,WIN_HEIGHT)) # Создание видимой поверхности
@@ -60,18 +60,18 @@ def first(way, num):
     bg.fill(Color(BACKGROUND_COLOR))     # Заливаем поверхность сплошным цветом
 
     #создаём героя
-    hero = Player(Lvl_1.getPlayerX(), Lvl_1.getPlayerY()) # создаем героя по (x,y) координатам
+    hero = Player(Lvk.getPlayerX(), Lvk.getPlayerY()) # создаем героя по (x,y) координатам
     left = right = up = False # по умолчанию - стоим
 
-    entities = Lvl_1.getEntities()
-    platforms = Lvl_1.getPlatforms()
-    monsters = Lvl_1.getMonsters()
+    entities = Lvk.getEntities()
+    platforms = Lvk.getPlatforms()
+    monsters = Lvk.getMonsters()
     entities.add(hero)
 
-    camera = Camera(camera_configure, len(Lvl_1.getLevel()[0])*PLATFORM_WIDTH, len(Lvl_1.getLevel())*PLATFORM_HEIGHT)
+    camera = Camera(camera_configure, len(Lvk.getLvl()[0])*PLATFORM_WIDTH, len(Lvk.getLvl())*PLATFORM_HEIGHT)
     #Delete useless sings
     del(punkts)
-    del(Lvl_1)
+    del(Lvk)
     del(game)
     show_fps = False;
 
@@ -114,26 +114,21 @@ def first(way, num):
             screen.blit(entity.image, camera.apply(entity))
         
         #Отображаем название уровня
-        screen.blit(font_lvl.render("Level {}".format(num), True, "#8bfff4"), (10,10))
+        screen.blit(font_lvl.render(lvl_name, True, "#8bfff4"), (10,10))
         
         if show_fps:
             screen.blit(font_lvl.render("{}".format(str(timer)[11:13]), True, "#8bfff4"), (WIN_WIDTH - 40, 0))
         
         pygame.display.update()     # обновление и вывод всех изменений на экран
         
-        if hero.win: 
+        if hero.isWin(): 
             break
         
-        if not hero.live:
+        if not hero.isLive():
             time.wait(300)
-            hero.live = True
             hero.teleporting()
         
 if __name__ == "__main__":
-    first('levels/2.txt', 1)
-    first('levels/1.txt', 2)
+    playLvl('levels/2.txt', 1, "Cave")
+    playLvl('levels/1.txt', 2, "Bad tonnels")
     endgame()
-
-# TODO:
-    #НОВЫЕ УРОВНИ
-    #НАВИГАЦИЯ В МЕНЮ С ПОМОЩЬЮ КНОПОК

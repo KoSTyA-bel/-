@@ -16,16 +16,16 @@ ANIMATION_MONSTERHORYSONTAL = [('%s/monsters/fire1.png' % ICON_DIR),
                       ('%s/monsters/fire2.png' % ICON_DIR )]
 
 class Monster(sprite.Sprite):
-    def __init__(self, x, y, left, up, maxLengthLeft,maxLengthUp):
+    def __init__(self, x, y, left, up, max_length_left,max_length_up):
+        self.startX = x # начальные координаты
+        self.startY = y
         sprite.Sprite.__init__(self)
         self.image = Surface((MONSTER_WIDTH, MONSTER_HEIGHT))
         self.image.fill(Color(MONSTER_COLOR))
         self.rect = Rect(x, y, MONSTER_WIDTH, MONSTER_HEIGHT)
         self.image.set_colorkey(Color(MONSTER_COLOR))
-        self.startX = x # начальные координаты
-        self.startY = y
-        self.maxLengthLeft = maxLengthLeft # максимальное расстояние, которое может пройти в одну сторону
-        self.maxLengthUp= maxLengthUp # максимальное расстояние, которое может пройти в одну сторону, вертикаль
+        self.max_length_left = max_length_left # максимальное расстояние, которое может пройти в одну сторону
+        self.max_length_up = max_length_up # максимальное расстояние, которое может пройти в одну сторону, вертикаль
         self.xvel = left # cкорость передвижения по горизонтали, 0 - стоит на месте
         self.yvel = up # скорость движения по вертикали, 0 - не двигается
         boltAnim = []
@@ -45,9 +45,9 @@ class Monster(sprite.Sprite):
  
         self.collide(platforms)
         
-        if (abs(self.startX - self.rect.x) > self.maxLengthLeft):
+        if (abs(self.startX - self.rect.x) > self.max_length_left):
             self.xvel =-self.xvel  # если прошли максимальное растояние, то идеи в обратную сторону
-        if (abs(self.startY - self.rect.y) > self.maxLengthUp):
+        if (abs(self.startY - self.rect.y) > self.max_length_up):
             self.yvel = -self.yvel # если прошли максимальное растояние, то идеи в обратную сторону, вертикаль
 
     def collide(self, platforms):

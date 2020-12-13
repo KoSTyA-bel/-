@@ -13,7 +13,6 @@ class Level:
         self.playerX = 0
         self.playerY = 0
         self.level = []
-        self.commands = []
         self.platforms = []
         self.entities = pygame.sprite.Group()
         self.monsters = pygame.sprite.Group()
@@ -85,15 +84,16 @@ class Level:
                     self.entities.add(m)
                     self.platforms.append(m)
                     
+                if col == "C":
+                    c = Coin(x,y)
+                    self.entities.add(c)
+                    self.platforms.append(c)
+                    
                 # if col == "M":
                     # m = Movable(x,y)
                     # self.entities.add(m)
                     # self.platforms.append(m)
                     
-                # if col == "C":
-                    # c = Coin(x,y)
-                    # self.entities.add(c)
-                    # self.platforms.append(c)
                 
                 #слишком сильно кушает фпс
                 # if col == " ":
@@ -110,7 +110,7 @@ class Level:
             y += PLATFORM_HEIGHT    #то же самое и с высотой
             x = 0                   #на каждой новой строчке начинаем с нуля
 
-    def getLevel(self):
+    def getLvl(self):
         return self.level
 
     def getPlayerX(self):

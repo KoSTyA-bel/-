@@ -9,7 +9,7 @@ SOUND_ACCEPT = pygame.mixer.Sound("%s/levels/accept.wav" % ICON_DIR)
 window = pygame.display.set_mode(DISPLAY)
 screen = pygame.Surface((WIN_WIDTH, WIN_HEIGHT))
 
-class StartMenu:
+class Menu:
     def __init__(self, punkts = [400, 350, u'Punkt', (250,250,30), (250,30,250)]):
         self.punkts = punkts
     def render(self, poverhnost, font, num_punkt):
@@ -18,9 +18,9 @@ class StartMenu:
                 poverhnost.blit(font.render(i[2], 1, i[4]), (i[0], i[1]-30))
             else:
                 poverhnost.blit(font.render(i[2], 1, i[3]), (i[0], i[1]-30))
-    def menu(self):
+    def showMenu(self):
         done = True
-        font_menu = pygame.font.Font(None, 50)
+        font_showMenu = pygame.font.Font(None, 50)
         pygame.key.set_repeat(0,0)
         pygame.mouse.set_visible(False)
         punkt = 0
@@ -30,7 +30,7 @@ class StartMenu:
             # for i in self.punkts:
                 # if mp[0]>i[0] and mp[0]<i[0]+155 and mp[1]>i[1] and mp[1]<i[1]+50:
                     # punkt =i[5]
-            self.render(screen, font_menu, punkt)
+            self.render(screen, font_showMenu, punkt)
             for e in pygame.event.get():
                 if e.type == pygame.QUIT:
                     sys.exit()

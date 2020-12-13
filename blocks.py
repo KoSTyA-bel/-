@@ -38,10 +38,11 @@ class Magnit(Platform):
         Platform.__init__(self, x, y)
         self.image = image.load("%s/block/magnit.png" % ICON_DIR).convert_alpha()
 
-# class Coin(Platform):
-    # def __init__(self, x, y):
-        # Platform.__init__(self, x, y)
-        # self.image = image.load("block/coin.png")
+class Coin(Platform):
+    def __init__(self, x, y):
+        Platform.__init__(self, x, y)
+        self.image = image.load("block/coin.png")
+        self.rect = Rect(x + 6, y + 6, PLATFORM_WIDTH-16, PLATFORM_HEIGHT)
 
 # class Movable(Platform):
     # def __init__(self, x, y):

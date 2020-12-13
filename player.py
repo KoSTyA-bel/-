@@ -43,11 +43,12 @@ SOUND_COIN = pygame.mixer.Sound("%s/alien/coin.wav" % ICON_DIR)
 class Player(sprite.Sprite):
     def __init__(self, x, y):
         sprite.Sprite.__init__(self)
-        self.xvel = 0   #скорость перемещения. 0 - стоять на месте
         self.startX = x # Начальная позиция Х, пригодится когда будем переигрывать уровень
         self.startY = y
+        self.coins = 0
+        self.xvel = 0   #скорость перемещения. 0 - стоять на месте
         self.yvel = 0 # скорость вертикального перемещения
-        self.onGround = False # На земле ли я?
+        self.on_ground = False # На земле ли я?
         self.live = True
         self.win = False
         self.image = Surface((WIDTH,HEIGHT))
@@ -101,7 +102,7 @@ class Player(sprite.Sprite):
     def update(self, left, right, up, platforms, entities):
 
         if up:
-            if self.onGround: # прыгаем, только когда можем оттолкнуться от земли
+            if self.on_ground: # прыгаем, только когда можем оттолкнуться от земли
                 self.yvel = -JUMP_POWER
                 SOUND_JUMP.play()
             self.image.fill(Color(COLOR))
@@ -112,7 +113,7 @@ class Player(sprite.Sprite):
             self.xvel = -MOVE_SPEED # Лево = x - n
             #SOUND_STEP.play()
             self.image.fill(Color(COLOR))
-            if up or (abs(self.yvel) > 2 * GRAVITY and  not self.onGround): # для прыжка влево есть отдельная анимация
+            if up or (abs(self.yvel) > 2 * GRAVITY and  not self.on_ground): # для прыжка влево есть отдельная анимация
                 self.boltAnimJumpLeft.blit(self.image, (0, 0))
             else:
                 self.boltAnimLeft.blit(self.image, (0, 0))
@@ -121,7 +122,7 @@ class Player(sprite.Sprite):
             self.xvel = MOVE_SPEED # Право = x + n
             #SOUND_STEP.play()
             self.image.fill(Color(COLOR))
-            if up or (abs(self.yvel) > 2 * GRAVITY and not self.onGround):
+            if up or (abs(self.yvel) > 2 * GRAVITY and not self.on_ground):
                 self.boltAnimJumpRight.blit(self.image, (0, 0))
             else:
                 self.boltAnimRight.blit(self.image, (0, 0))
@@ -132,10 +133,10 @@ class Player(sprite.Sprite):
                 self.image.fill(Color(COLOR))
                 self.boltAnimStay.blit(self.image, (0, 0))
 
-        if not self.onGround:
+        if not self.on_ground:
             self.yvel +=  GRAVITY
 
-        self.onGround = False; # Мы не знаем, когда мы на земле((
+        self.on_ground = False; # Мы не знаем, когда мы на земле((
         self.rect.y += self.yvel
         self.collide(0, self.yvel, platforms, entities)
 
@@ -147,11 +148,18 @@ class Player(sprite.Sprite):
         self.boltAnimDie.blit(self.image, (0, 0))
         SOUND_DIE.play()
         self.live = False
-
-    def win(self):
+    
+    def getCoins(self):
+        return self.coins // 3
+    
+    def isLive(self):
+        return self.live
+    
+    def isWin(self):
         return self.win
 
     def teleporting(self):
+        self.live = True
         self.xvel, self.yvel = 0,0
         self.rect.x = self.startX
         self.rect.y = self.startY
@@ -163,8 +171,15 @@ class Player(sprite.Sprite):
                 
                 if isinstance(platform, blocks.BlockDie) or isinstance(platform, Monster): # если пересакаемый блок - blocks.BlockDie
                     self.die()# умираем
+                    
                 elif isinstance(platform, blocks.End):
                     self.win = True
+                    
+                elif isinstance(platform, blocks.Coin):
+                    SOUND_COIN.play()
+                    print(self.coins)
+                    platforms.remove(platform)
+                    entities.remove(platform) 
                     
                 elif isinstance(platform, blocks.Magnit):
                     self.rect.top = platform.rect.bottom # то не движется вверх
@@ -178,17 +193,13 @@ class Player(sprite.Sprite):
 
                 elif yvel > 0:                      # если падает вниз
                     self.rect.bottom = platform.rect.top # то не падает вниз
-                    self.onGround = True          # и становится на что-то твердое
+                    self.on_ground = True          # и становится на что-то твердое
                     self.yvel = 0                 # и энергия падения пропадает
 
                 elif yvel < 0 and not isinstance(platform, blocks.Half):                      # если движется вверх
                     self.rect.top = platform.rect.bottom # то не движется вверх
                     self.yvel = 0.2                 # и энергия прыжка пропадает
                     #Если дать -1 можно получить интересную механику)))
-                # elif isinstance(platform, blocks.Coin):
-                    # SOUND_COIN.play()
-                    # platforms.remove(platform)
-                    # entities.remove(platform)
                 
                 #I delete this
                 #if isinstance(platform, blocks.Movable):
