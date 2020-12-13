@@ -5,40 +5,7 @@ import os
 import blocks
 from blocks import *
 from monsters import *
-
-pygame.init()
-MOVE_SPEED = 3.2
-WIDTH = 22
-HEIGHT = 32
-COLOR =  "#888888"
-JUMP_POWER = 8
-GRAVITY = 0.35 # Сила, которая будет тянуть нас вниз
-ANIMATION_DELAY = 0.08 # скорость смены кадров
-ICON_DIR = os.path.dirname(__file__)
-
-ANIMATION_RIGHT = [("%s/alien/0ralient.png" % ICON_DIR),
-            ("%s/alien/1ralient.png" % ICON_DIR),
-            ("%s/alien/2ralient.png" % ICON_DIR),
-            ("%s/alien/1ralient.png" % ICON_DIR),
-            ("%s/alien/0ralient.png" % ICON_DIR),
-            ("%s/alien/3ralient.png" % ICON_DIR),
-            ("%s/alien/4ralient.png" % ICON_DIR)]
-ANIMATION_LEFT = [("%s/alien/0lalient.png" % ICON_DIR),
-            ("%s/alien/1lalient.png" % ICON_DIR),
-            ("%s/alien/2lalient.png" % ICON_DIR),
-            ("%s/alien/1lalient.png" % ICON_DIR),
-            ("%s/alien/0lalient.png" % ICON_DIR),
-            ("%s/alien/3lalient.png" % ICON_DIR),
-            ("%s/alien/4lalient.png" % ICON_DIR)]
-ANIMATION_JUMP_LEFT = [('%s/alien/jlalien.png' % ICON_DIR, ANIMATION_DELAY)]
-ANIMATION_JUMP_RIGHT = [('%s/alien/jralien.png' % ICON_DIR, ANIMATION_DELAY)]
-ANIMATION_JUMP = [('%s/alien/jalien.png' % ICON_DIR, ANIMATION_DELAY)]
-ANIMATION_STAY = [('%s/alien/0alien.png' % ICON_DIR, ANIMATION_DELAY)]
-ANIMATION_DIE = [('%s/alien/dalien.png' % ICON_DIR, ANIMATION_DELAY)]
-SOUND_JUMP = pygame.mixer.Sound("%s/alien/jump.wav" % ICON_DIR)
-SOUND_DIE = pygame.mixer.Sound("%s/alien/die.wav" % ICON_DIR)
-SOUND_STEP = pygame.mixer.Sound("%s/alien/step.wav" % ICON_DIR)
-SOUND_COIN = pygame.mixer.Sound("%s/alien/coin.wav" % ICON_DIR)
+from settings import *
 
 class Player(sprite.Sprite):
     def __init__(self, x, y):
@@ -177,7 +144,7 @@ class Player(sprite.Sprite):
                     
                 elif isinstance(platform, blocks.Coin):
                     SOUND_COIN.play()
-                    print(self.coins)
+                    self.coins += 1
                     platforms.remove(platform)
                     entities.remove(platform) 
                     

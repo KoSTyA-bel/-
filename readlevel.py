@@ -2,9 +2,8 @@ import pygame
 from pygame import *
 from blocks import *
 from monsters import *
-import random
-
-ICON_DIR = os.path.dirname(__file__)
+from settings import *
+#import random
 
 class Level:
 

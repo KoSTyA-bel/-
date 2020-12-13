@@ -6,17 +6,12 @@ from readlevel import *
 from startwindow import *
 from monsters import *
 from camera import Camera
+from settings import *
 
-#Объявляем переменные
-WIN_WIDTH = 800 #Ширина создаваемого окна
-WIN_HEIGHT = 640# Высота
-DISPLAY = (WIN_WIDTH, WIN_HEIGHT) # Группируем ширину и высоту в одну переменную
-GAME_NAME = "Alien adventure"
-BACKGROUND_COLOR = "#000000"
-pygame.init()
-font.init()
 pygame.display.set_caption(GAME_NAME)
 font_lvl = pygame.font.SysFont(None, 50)
+window = pygame.display.set_mode(DISPLAY)
+screen = pygame.Surface((WIN_WIDTH, WIN_HEIGHT))
 
 def camera_configure(camera, target_rect):
     l, t, _, _ = target_rect
@@ -52,7 +47,7 @@ def playLvl(way, num, lvl_name):
     game = Menu(punkts)
     game.showMenu()
     
-    Lvk = Level(way)
+    Lvl = Level(way)
     timer = pygame.time.Clock()
     screen = pygame.display.set_mode(DISPLAY) # Создаем окошко
     bg = Surface((WIN_WIDTH,WIN_HEIGHT)) # Создание видимой поверхности
@@ -60,18 +55,18 @@ def playLvl(way, num, lvl_name):
     bg.fill(Color(BACKGROUND_COLOR))     # Заливаем поверхность сплошным цветом
 
     #создаём героя
-    hero = Player(Lvk.getPlayerX(), Lvk.getPlayerY()) # создаем героя по (x,y) координатам
+    hero = Player(Lvl.getPlayerX(), Lvl.getPlayerY()) # создаем героя по (x,y) координатам
     left = right = up = False # по умолчанию - стоим
 
-    entities = Lvk.getEntities()
-    platforms = Lvk.getPlatforms()
-    monsters = Lvk.getMonsters()
+    entities = Lvl.getEntities()
+    platforms = Lvl.getPlatforms()
+    monsters = Lvl.getMonsters()
     entities.add(hero)
 
-    camera = Camera(camera_configure, len(Lvk.getLvl()[0])*PLATFORM_WIDTH, len(Lvk.getLvl())*PLATFORM_HEIGHT)
+    camera = Camera(camera_configure, len(Lvl.getLvl()[0])*PLATFORM_WIDTH, len(Lvl.getLvl())*PLATFORM_HEIGHT)
     #Delete useless sings
     del(punkts)
-    del(Lvk)
+    del(Lvl)
     del(game)
     show_fps = False;
 
@@ -127,8 +122,11 @@ def playLvl(way, num, lvl_name):
         if not hero.isLive():
             time.wait(300)
             hero.teleporting()
-        
-if __name__ == "__main__":
+
+def main():
     playLvl('levels/2.txt', 1, "Cave")
     playLvl('levels/1.txt', 2, "Bad tonnels")
     endgame()
+    
+if __name__ == "__main__":
+    main()

@@ -1,4 +1,5 @@
 from pygame import *
+from settings import *
 
 class Camera:
     def __init__(self, camera_func, width, height):

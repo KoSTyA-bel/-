@@ -2,12 +2,7 @@ import sys
 import pygame
 from pygame import*
 from main import *
-
-ICON_DIR = os.path.dirname(__file__)
-SOUND_CHOISE = pygame.mixer.Sound("%s/levels/select.wav" % ICON_DIR)
-SOUND_ACCEPT = pygame.mixer.Sound("%s/levels/accept.wav" % ICON_DIR)
-window = pygame.display.set_mode(DISPLAY)
-screen = pygame.Surface((WIN_WIDTH, WIN_HEIGHT))
+from settings import *
 
 class Menu:
     def __init__(self, punkts = [400, 350, u'Punkt', (250,250,30), (250,30,250)]):

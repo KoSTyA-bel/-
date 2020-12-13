@@ -1,19 +1,7 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 from pygame import *
 import pyganim
 import os
-
-MONSTER_WIDTH = 32
-MONSTER_HEIGHT = 32
-MONSTER_COLOR = "#2110FF"
-AMIM_DELAY = 1
-ICON_DIR = os.path.dirname(__file__) #  Полный путь к каталогу с файлами
-
-
-ANIMATION_MONSTERHORYSONTAL = [('%s/monsters/fire1.png' % ICON_DIR),
-                      ('%s/monsters/fire2.png' % ICON_DIR )]
+from settings import *
 
 class Monster(sprite.Sprite):
     def __init__(self, x, y, left, up, max_length_left,max_length_up):
